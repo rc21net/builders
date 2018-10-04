@@ -1,0 +1,7 @@
+{
+	"outputDir": 		"_test/sprites/",
+	"outputDirForCss":	"sprites/",
+	"inputPath": 		"_test/sprites/raw/",
+	"sassPath": 		"_test/sprites/_sprites.scss",
+	"svgMode":			"css"
+}

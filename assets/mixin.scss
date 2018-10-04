@@ -1,0 +1,131 @@
+@mixin _background($path, $hash, $x, $y, $spriteWidth, $spriteHeight, $width, $height) {
+	display: inline-block;
+	background: url($path + '?v=' + $hash) no-repeat $x $y;
+	background-size: $spriteWidth $spriteHeight;
+	width: $width;
+	height: $height;
+}
+
+@mixin sprite($spriteName, $imageName) {
+	$spriteMap: map-get($sprites, $spriteName);
+	$path: map-get($spriteMap, path);
+	$hash: map-get($spriteMap, hash);
+	$spriteWidth: map-get($spriteMap, width) + px;
+	$spriteHeight: map-get($spriteMap, height) + px;
+	$items: map-get($spriteMap, items);
+	$image: map-get($items, $imageName);
+	$x: map-get($image, x) * -1px;
+	$y: map-get($image, y) * -1px;
+	$width: map-get($image, width) + px;
+	$height: map-get($image, height) + px;
+	@include _background($path, $hash, $x, $y, $spriteWidth, $spriteHeight, $width, $height);
+}
+
+@mixin sprite-scale-to-ratio($spriteName, $imageName, $ratio) {
+	$spriteMap: map-get($sprites, $spriteName);
+	$path: map-get($spriteMap, path);
+	$hash: map-get($spriteMap, hash);
+	$spriteWidth: map-get($spriteMap, width) * $ratio + px;
+	$spriteHeight: map-get($spriteMap, height) * $ratio + px;
+	$items: map-get($spriteMap, items);
+	$image: map-get($items, $imageName);
+	$x: map-get($image, x) * -1px * $ratio;
+	$y: map-get($image, y) * -1px * $ratio;
+	$width: map-get($image, width) * $ratio + px;
+	$height: map-get($image, height) * $ratio + px;
+	@include _background($path, $hash, $x, $y, $spriteWidth, $spriteHeight, $width, $height);
+}
+
+@mixin sprite-scale-to-width($spriteName, $imageName, $width) {
+	$spriteMap: map-get($sprites, $spriteName);
+	$items: map-get($spriteMap, items);
+	$image: map-get($items, $imageName);
+	$w: map-get($image, width);
+	$ratio: $width / $w;
+
+	@include sprite-scale-to-ratio($spriteName, $imageName, $ratio)
+}
+
+@mixin sprite-scale-to-height($spriteName, $imageName, $height) {
+	$spriteMap: map-get($sprites, $spriteName);
+	$items: map-get($spriteMap, items);
+	$image: map-get($items, $imageName);
+	$h: map-get($image, height);
+	$ratio: $height / $h;
+
+	@include sprite-scale-to-ratio($spriteName, $imageName, $ratio)
+}
+
+// SVG view
+
+@mixin _background-svg-fragment($path, $hash, $imageName, $width, $height) {
+	background: url($path + '?v=' + $hash + '#' + $imageName) no-repeat;
+	background-size: $width $height;
+	display: inline-block;
+	width: $width;
+	height: $height;
+}
+
+@mixin sprite-svg-fragment($spriteName, $imageName) {
+	$spriteMap: map-get($sprites, $spriteName);
+	$path: map-get($spriteMap, path);
+	$hash: map-get($spriteMap, hash);
+	$items: map-get($spriteMap, items);
+	$image: map-get($items, $imageName);
+	$width: map-get($image, width) + px;
+	$height: map-get($image, height) + px;
+
+	@include _background-svg-fragment($path, $hash, $imageName, $width, $height)
+}
+
+@mixin sprite-svg-fragment-scale-to-ratio($spriteName, $imageName, $ratio) {
+	$spriteMap: map-get($sprites, $spriteName);
+	$path: map-get($spriteMap, path);
+	$hash: map-get($spriteMap, hash);
+	$items: map-get($spriteMap, items);
+	$image: map-get($items, $imageName);
+	$width: map-get($image, width) * $ratio + px;
+	$height: map-get($image, height) * $ratio + px;
+
+	@include _background-svg-fragment($path, $hash, $imageName, $width, $height)
+}
+
+@mixin sprite-svg-fragment-scale-to-width($spriteName, $imageName, $width) {
+	$spriteMap: map-get($sprites, $spriteName);
+	$items: map-get($spriteMap, items);
+	$image: map-get($items, $imageName);
+	$w: map-get($image, width);
+	$ratio: $width / $w;
+
+	@include sprite-svg-fragment-scale-to-ratio($spriteName, $imageName, $ratio)
+}
+
+@mixin sprite-svg-fragment-scale-to-height($spriteName, $imageName, $height) {
+	$spriteMap: map-get($sprites, $spriteName);
+	$items: map-get($spriteMap, items);
+	$image: map-get($items, $imageName);
+	$h: map-get($image, height);
+	$ratio: $height / $h;
+
+	@include sprite-svg-fragment-scale-to-ratio($spriteName, $imageName, $ratio)
+}
+
+
+/**
+	deprecated
+*/
+@mixin sprite_old($spriteName, $imageName) {
+	$spriteMap: map-get($sprites, $spriteName);
+	$path: map-get($spriteMap, path);
+	$hash: map-get($spriteMap, hash);
+	$items: map-get($spriteMap, items);
+	$image: map-get($items, $imageName);
+	$x: map-get($image, x) * -1px;
+	$y: map-get($image, y) * -1px;
+	$width: map-get($image, width) + px;
+	$height: map-get($image, height) + px;
+	display: inline-block;
+	background: url($path + '?v=' + $hash) no-repeat $x $y;
+	width: $width;
+	height: $height;
+}

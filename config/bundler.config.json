@@ -1,0 +1,9 @@
+{
+	"scannedRootDirectories": [
+		"../js",
+		"../css"
+	],
+	"defaultOptions": {
+		"forceCss": true
+	}
+}
